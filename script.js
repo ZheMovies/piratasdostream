@@ -1,5 +1,6 @@
 const apiKey = '6fef90efb83322056c9bf84cdde87872'; // Sua chave API TMDB
 const mediaList = [
+{ type: 'movie', id: 1362670, link: "https://t.me/c/1792165409/50010/50016" }, 
 { type: 'movie', id: 1022789, link: "https://t.me/c/1792165409/50010/50015" },    
 { type: 'movie', id: 550, link: "https://t.me/c/1792165409/50010/50013" }, 
     { type: 'tv', id: 1399, link: "https://t.me/seu_link_aqui" },
