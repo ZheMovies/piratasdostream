@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    position: relative;
+}
+
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: -1;
+}
+
+.content {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+}
+
+#poster {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: darkred;
+}
+
+/* Estilo para a seleção de temporada e episódio */
+#selecao-temporada {
+    margin-top: 20px;
+}
+
+select {
+    padding: 5px;
+    font-size: 16px;
+    margin: 5px;
+}
