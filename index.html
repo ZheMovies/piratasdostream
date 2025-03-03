@@ -3,27 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmes e Séries</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Site de Filmes e Séries</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Barra de pesquisa -->
     <div id="search-container">
-        <input type="text" id="search" placeholder="Buscar...">
-        <button id="searchButton">Pesquisar</button>
+        <input type="text" id="search" placeholder="Pesquisar...">
+        <button id="searchButton">Buscar</button>
     </div>
 
-    <!-- Menu suspenso de categorias -->
-    <div class="dropdown">
-        <button class="dropbtn">Categorias</button>
-        <div class="dropdown-content" id="genreDropdown">
-            <!-- Gêneros carregados aqui -->
-        </div>
+    <!-- Menu suspenso -->
+    <div id="categoryMenu">
+        Categorias
+        <ul>
+            <li>Filmes</li>
+            <li>Séries</li>
+            <li>Ação</li>
+            <li>Comédia</li>
+            <li>Drama</li>
+            <li>Documentário</li>
+        </ul>
     </div>
 
-    <!-- Container onde os cards de filmes/séries serão inseridos -->
-    <div id="media-container" class="media-container">
-        <!-- Os cards de mídia vão aparecer aqui -->
+    <!-- Container para os cards -->
+    <div id="media-container">
+        <!-- Os cards serão adicionados aqui via JavaScript -->
     </div>
 
     <script src="script.js"></script>
