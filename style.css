@@ -1,59 +1,66 @@
-/* Estilo geral */
 body {
     font-family: Arial, sans-serif;
-    background-color: #000;
+    background-color: black;
     color: white;
     margin: 0;
-    padding: 0;
-    text-align: center;
+    padding-top: 80px; /* Evita que os cards fiquem atrás da barra de busca */
 }
 
-/* Correção para o primeiro card não ficar atrás da barra de pesquisa */
+#search-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: black;
+    padding: 10px;
+    text-align: center;
+    z-index: 100;
+}
+
 #media-container {
-    margin-top: 100px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    max-width: 100%;
-    margin: 0 auto;
+    margin-top: 20px;
 }
 
-/* Estilo da caixa de sugestão */
+.media-item {
+    background: #222;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 8px;
+    width: 200px;
+}
+
+.media-item img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: #e50914;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Caixa de sugestão */
 #suggestion-box {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.9);
+    background: white;
+    color: black;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    z-index: 100;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-}
-
-#suggestion-box p {
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-#suggestion-box button {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 5px;
-}
-
-#suggestion-box button:hover {
-    background-color: darkred;
-}
-
-.hidden {
-    display: none;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
 }
