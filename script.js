@@ -45,13 +45,13 @@ async function fetchGenres() {
 
 // Função para filtrar por gênero
 async function filterByGenre(genreId) {
-    const filteredMedia = mediaList.filter(async (media) => {
+    const filteredMedia = await Promise.all(mediaList.filter(async (media) => {
         const data = await fetchMediaData(media.type, media.id);
         if (!data || data.status_code) return false;
 
         const genreIds = media.type === 'movie' ? data.genres.map(genre => genre.id) : data.genres_ids;
         return genreIds.includes(genreId);
-    });
+    }));
 
     updateMediaDisplay(filteredMedia);
 }
