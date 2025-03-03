@@ -3,9 +3,9 @@ const mediaList = [
     { type: 'movie', id: 89623, link: "https://t.me/c/1792165409/50010/50017" },
     { type: 'movie', id: 912649, link: "https://t.me/c/1792165409/50010/50017" },
     { type: 'movie', id: 858414, link: "https://t.me/c/1792165409/50010/50017" },
-    { type: 'movie', id: 1362670, link: "https://t.me/c/1792165409/50010/50016" }, 
-    { type: 'movie', id: 1022789, link: "https://t.me/c/1792165409/50010/50015" },    
-    { type: 'movie', id: 550, link: "https://t.me/c/1792165409/50010/50013" }, 
+    { type: 'movie', id: 1362670, link: "https://t.me/c/1792165409/50010/50016" },
+    { type: 'movie', id: 1022789, link: "https://t.me/c/1792165409/50010/50015" },
+    { type: 'movie', id: 550, link: "https://t.me/c/1792165409/50010/50013" },
     { type: 'tv', id: 1399, link: "https://t.me/seu_link_aqui" },
     { type: 'tv', id: 1379, link: "https://t.me/seu_link_aqui" },
     { type: 'tv', id: 93405, link: "https://t.me/seu_link_aqui" }
@@ -23,36 +23,19 @@ async function fetchMediaData(type, id) {
     }
 }
 
-// Função para buscar e preencher os gêneros
-async function fetchGenres() {
-    try {
-        const response = await fetch(https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=pt-BR);
-        const data = await response.json();
-        const genres = data.genres;
-
-        const genreDropdown = document.getElementById('genreDropdown');
-        genres.forEach(genre => {
-            const option = document.createElement('a');
-            option.href = "#";
-            option.textContent = genre.name;
-            option.onclick = () => filterByGenre(genre.id);
-            genreDropdown.appendChild(option);
-        });
-    } catch (error) {
-        console.error('Erro ao buscar gêneros:', error);
-    }
-}
-
 // Função para filtrar por gênero
 async function filterByGenre(genreId) {
-    const filteredMedia = await Promise.all(mediaList.filter(async (media) => {
+    const filteredMedia = [];
+    for (let i = 0; i < mediaList.length; i++) {
+        const media = mediaList[i];
         const data = await fetchMediaData(media.type, media.id);
-        if (!data || data.status_code) return false;
+        if (!data || data.status_code) continue;
 
         const genreIds = media.type === 'movie' ? data.genres.map(genre => genre.id) : data.genres_ids;
-        return genreIds.includes(genreId);
-    }));
-
+        if (genreIds.includes(genreId)) {
+            filteredMedia.push(media);
+        }
+    }
     updateMediaDisplay(filteredMedia);
 }
 
@@ -80,7 +63,6 @@ async function updateMediaDisplay(filteredMedia) {
 // Função para carregar a mídia quando a página for carregada
 document.addEventListener("DOMContentLoaded", () => {
     addMedia();
-    fetchGenres(); // Carregar os gêneros ao carregar a página
 });
 
 // Função para adicionar os cards de mídia à página
@@ -103,10 +85,22 @@ async function addMedia() {
         `;
         mediaContainer.appendChild(mediaItem);
     }
-
-    // Agora que os cards estão carregados, ativar a função de busca
-    setupSearch();
 }
+
+// Toggle para abrir e fechar o menu de categorias
+const menuToggle = document.getElementById('menu-toggle');
+const categoryMenu = document.getElementById('category-menu');
+const arrow = document.querySelector('.arrow');
+
+menuToggle.addEventListener('click', () => {
+    if (categoryMenu.style.display === 'block') {
+        categoryMenu.style.display = 'none';
+        arrow.innerHTML = '&#8594;'; // Setinha para direita
+    } else {
+        categoryMenu.style.display = 'block';
+        arrow.innerHTML = '&#8595;'; // Setinha para baixo
+    }
+});
 
 // Função de pesquisa
 function setupSearch() {
@@ -119,9 +113,9 @@ function setupSearch() {
             const title = item.querySelector("h3").innerText.toLowerCase();
 
             if (title.includes(searchQuery)) {
-                item.style.display = "block"; // Exibe o item se corresponder à pesquisa
+                item.style.display = "block"; // Mostrar o item que corresponde à pesquisa
             } else {
-                item.style.display = "none"; // Esconde o item caso contrário
+                item.style.display = "none"; // Esconder o item que não corresponde à pesquisa
             }
         });
     });
