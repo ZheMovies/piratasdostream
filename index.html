@@ -4,21 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filmes e Séries</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="suggestion-box" class="hidden">
-        <p>Você aceita uma sugestão nossa?</p>
-        <button id="yes-suggestion">Sim</button>
-        <button id="no-suggestion">Não</button>
-    </div>
-
+    <!-- Barra de pesquisa -->
     <div id="search-container">
-        <input type="text" id="search" placeholder="Pesquisar filmes e séries...">
-        <button id="searchButton">Buscar</button>
+        <input type="text" id="search" placeholder="Buscar...">
+        <button id="searchButton">Pesquisar</button>
     </div>
 
-    <div id="media-container"></div>
+    <!-- Menu suspenso de categorias -->
+    <div class="dropdown">
+        <button class="dropbtn">Categorias</button>
+        <div class="dropdown-content" id="genreDropdown">
+            <!-- Gêneros carregados aqui -->
+        </div>
+    </div>
+
+    <!-- Container onde os cards de filmes/séries serão inseridos -->
+    <div id="media-container" class="media-container">
+        <!-- Os cards de mídia vão aparecer aqui -->
+    </div>
 
     <script src="script.js"></script>
 </body>
