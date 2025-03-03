@@ -5,27 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes da Mídia</title>
     <link rel="stylesheet" href="detalhes.css">
-    <style>
-        /* Estilizando o container para tornar o iframe responsivo */
-        #trailer-container {
-            display: none;
-            position: relative;
-            width: 100%;
-            max-width: 800px; /* Limita a largura máxima */
-            margin: 20px auto;
-            padding-bottom: 56.25%; /* Mantém a proporção 16:9 */
-            height: 0;
-        }
-
-        #trailer-iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 10px; /* Borda arredondada para um design mais bonito */
-        }
-    </style>
 </head>
 <body>
     <div id="background"></div>
@@ -44,9 +23,9 @@
         <button id="trailer">🎬 Trailer</button>
         <button id="assistir">▶ Assistir</button>
 
-        <!-- Área para exibir o trailer responsivo -->
-        <div id="trailer-container">
-            <iframe id="trailer-iframe" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <!-- Área para exibir o trailer -->
+        <div id="trailer-container" style="display: none;">
+            <iframe id="trailer-iframe" width="560" height="315" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <div id="elenco">
@@ -56,31 +35,80 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Botão de voltar
-            document.getElementById("voltar").onclick = function () {
-                window.history.back();
-            };
+        document.addEventListener("DOMContentLoaded", async function () {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id");
+            const type = params.get("type");
+            const link = params.get("link");
+            const apiKey = '6fef90efb83322056c9bf84cdde87872';
 
-            // Lógica para exibir o trailer
-            document.getElementById("trailer").onclick = async function () {
-                try {
-                    const videosResponse = await fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=pt-BR`);
-                    const videosData = await videosResponse.json();
-                    const trailer = videosData.results.find(video => video.type === "Trailer" && video.site === "YouTube");
+            if (!id || !type) {
+                document.body.innerHTML = "<h1>Mídia não encontrada</h1>";
+                return;
+            }
 
-                    if (trailer) {
-                        document.getElementById("trailer-container").style.display = "block";
-                        document.getElementById("trailer-iframe").src = `https://www.youtube.com/embed/${trailer.key}`;
-                    } else {
-                        alert("Piratas do Stream diz: Trailer não disponível.");
+            try {
+                const response = await fetch(`https://api.themoviedb.org/3/${type}/${id}?api_key=${apiKey}&language=pt-BR`);
+                const data = await response.json();
+
+                document.getElementById("background").style.backgroundImage = `url(https://image.tmdb.org/t/p/w1280${data.backdrop_path})`;
+                document.getElementById("poster").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+                document.getElementById("titulo").innerText = data.title || data.name;
+                document.getElementById("nota").innerText = `⭐ Nota: ${data.vote_average ? data.vote_average.toFixed(1) : 'N/A'}`;
+                document.getElementById("genero").innerText = `🎭 Gênero: ${data.genres.map(g => g.name).join(', ')}`;
+                document.getElementById("data-lancamento").innerText = `📅 Lançamento: ${data.release_date || data.first_air_date || 'Não disponível'}`;
+                document.getElementById("duracao").innerText = `⏳ Duração: ${data.runtime ? data.runtime + ' minutos' : 'Não disponível'}`;
+                document.getElementById("descricao").innerText = data.overview;
+
+                // Botão de assistir
+                document.getElementById("assistir").onclick = function () {
+                    window.location.href = link;
+                };
+
+                // Botão do trailer
+                document.getElementById("trailer").onclick = async function () {
+                    try {
+                        const videosResponse = await fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=pt-BR`);
+                        const videosData = await videosResponse.json();
+                        const trailer = videosData.results.find(video => video.type === "Trailer" && video.site === "YouTube");
+
+                        if (trailer) {
+                            document.getElementById("trailer-container").style.display = "block";
+                            document.getElementById("trailer-iframe").src = `https://www.youtube.com/embed/${trailer.key}`;
+                        } else {
+                            alert("Piratas do Stream diz: Trailer não disponível.");
+                        }
+                    } catch (error) {
+                        console.error("Erro ao carregar o trailer:", error);
+                        alert("Erro ao carregar o trailer. Verifique sua conexão.");
                     }
-                } catch (error) {
-                    console.error("Erro ao buscar o trailer:", error);
-                    alert("Erro ao carregar o trailer. Verifique sua conexão.");
-                }
-            };
+                };
+
+                // Buscar elenco
+                const creditsResponse = await fetch(`https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${apiKey}&language=pt-BR`);
+                const creditsData = await creditsResponse.json();
+                const atoresContainer = document.getElementById("atores");
+
+                creditsData.cast.slice(0, 10).forEach(actor => {
+                    const actorDiv = document.createElement("div");
+                    actorDiv.classList.add("actor");
+                    actorDiv.innerHTML = `
+                        <img src="${actor.profile_path ? 'https://image.tmdb.org/t/p/w185' + actor.profile_path : 'https://via.placeholder.com/185'}" alt="${actor.name}">
+                        <p>${actor.name} como ${actor.character}</p>
+                    `;
+                    atoresContainer.appendChild(actorDiv);
+                });
+
+            } catch (error) {
+                console.error("Erro ao buscar detalhes da mídia:", error);
+                document.body.innerHTML = "<h1>Erro ao carregar a mídia</h1>";
+            }
         });
+
+        // Função para voltar à página anterior
+        document.getElementById("voltar").onclick = function () {
+            window.history.back();
+        };
     </script>
 </body>
 </html>
