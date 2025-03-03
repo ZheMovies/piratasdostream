@@ -7,14 +7,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <!-- O título foi removido -->
-    </header>
+    <div id="suggestion-box" class="hidden">
+        <p>Você aceita uma sugestão nossa?</p>
+        <button onclick="getSuggestions()">Sim</button>
+        <button onclick="closeSuggestionBox()">Não</button>
+    </div>
+
+    <header></header>
+
     <div id="search-container">
         <input type="text" id="search" placeholder="Pesquisar filmes e séries...">
         <button id="searchButton">Buscar</button>
     </div>
+
     <main id="media-container"></main>
+
     <script src="script.js"></script>
 </body>
 </html>
