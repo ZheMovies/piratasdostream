@@ -30,8 +30,9 @@
 <body>
     <div id="background"></div>
     <div class="content">
-        <button id="voltar">🔙 Voltar</button> <!-- Botão de voltar -->
-        
+        <!-- Botão de voltar -->
+        <button id="voltar">🔙 Voltar</button>
+
         <img id="poster" src="" alt="Poster">
         <h1 id="titulo"></h1>
         <p id="nota"></p>
@@ -53,6 +54,7 @@
             <div id="atores"></div>
         </div>
     </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Botão de voltar
@@ -60,17 +62,22 @@
                 window.history.back();
             };
 
-            // Modifica a mensagem de trailer não disponível
+            // Lógica para exibir o trailer
             document.getElementById("trailer").onclick = async function () {
-                const videosResponse = await fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=pt-BR`);
-                const videosData = await videosResponse.json();
-                const trailer = videosData.results.find(video => video.type === "Trailer" && video.site === "YouTube");
+                try {
+                    const videosResponse = await fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=pt-BR`);
+                    const videosData = await videosResponse.json();
+                    const trailer = videosData.results.find(video => video.type === "Trailer" && video.site === "YouTube");
 
-                if (trailer) {
-                    document.getElementById("trailer-container").style.display = "block";
-                    document.getElementById("trailer-iframe").src = `https://www.youtube.com/embed/${trailer.key}`;
-                } else {
-                    alert("Piratas do Stream diz: Trailer não disponível.");
+                    if (trailer) {
+                        document.getElementById("trailer-container").style.display = "block";
+                        document.getElementById("trailer-iframe").src = `https://www.youtube.com/embed/${trailer.key}`;
+                    } else {
+                        alert("Piratas do Stream diz: Trailer não disponível.");
+                    }
+                } catch (error) {
+                    console.error("Erro ao buscar o trailer:", error);
+                    alert("Erro ao carregar o trailer. Verifique sua conexão.");
                 }
             };
         });
