@@ -2,6 +2,8 @@
 .dropdown {
     position: relative;
     display: inline-block;
+    margin-top: 10px; /* Ajusta a posição do menu abaixo da barra de pesquisa */
+    text-align: center;
 }
 
 .dropbtn {
@@ -43,6 +45,7 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    margin-top: 20px; /* Adiciona espaçamento entre a barra de pesquisa e os cards */
 }
 
 /* Estilos dos cards */
