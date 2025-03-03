@@ -1,105 +1,126 @@
-/* Estilos para o menu suspenso */
-.dropdown {
-    position: relative;
-    display: inline-block;
-    margin-top: 10px; /* Ajusta a posição do menu abaixo da barra de pesquisa */
-    text-align: center;
+/* Resetando margens e preenchimentos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
+/* Corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Cor de fundo neutra */
+    color: #333; /* Texto escuro para contraste */
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-/* Estilos do container de mídia */
-#media-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 20px; /* Adiciona espaçamento entre a barra de pesquisa e os cards */
-}
-
-/* Estilos dos cards */
-.media-item {
-    width: 200px;
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.media-item img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-button {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Estilo do campo de busca */
+/* Barra de pesquisa */
 #search-container {
-    text-align: center;
-    margin: 20px 0;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #333; /* Cor de fundo escuro para a barra */
+    color: white;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #search {
     padding: 10px;
+    border: none;
+    border-radius: 4px;
+    width: 70%;
     font-size: 16px;
-    width: 300px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
 }
 
 #searchButton {
-    padding: 10px 15px;
-    background-color: #28a745;
-    color: white;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    background-color: #ff9900; /* Cor de destaque */
+    color: white;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-#searchButton:hover {
-    background-color: #218838;
+/* Card de mídia */
+.media-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.media-item:hover {
+    transform: scale(1.05);
+}
+
+.media-item img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.media-item h3 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.media-item button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.media-item button:hover {
+    background-color: #0056b3;
+}
+
+/* Container principal para os cards */
+#media-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Menu suspenso */
+#categoryMenu {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+}
+
+#categoryMenu ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#categoryMenu:hover ul {
+    display: block;
+}
+
+#categoryMenu ul li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+#categoryMenu ul li:hover {
+    background-color: #ff9900;
 }
