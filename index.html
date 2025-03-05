@@ -1,33 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site de Filmes e Séries</title>
+    <title>Filmes e Séries</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- Barra de pesquisa -->
-    <div id="search-bar">
-        <input type="text" id="search" placeholder="Pesquisar...">
-        <button id="searchButton">Pesquisar</button>
+    <header>
+        <!-- O título foi removido -->
+    </header>
+    <div id="search-container">
+        <input type="text" id="search" placeholder="Pesquisar filmes e séries...">
+        <button id="searchButton">Buscar</button>
     </div>
-
-    <!-- Menu de Categorias -->
-    <div id="menu-toggle" class="menu-toggle">
-        <span class="arrow">&#8594;</span> <!-- Setinha -->
-    </div>
-    <div id="category-menu" class="category-menu">
-        <a href="#" onclick="filterByGenre(28)">Ação</a>
-        <a href="#" onclick="filterByGenre(35)">Comédia</a>
-        <a href="#" onclick="filterByGenre(18)">Drama</a>
-        <!-- Adicione mais categorias aqui -->
-    </div>
-
-    <!-- Container para os cards de filmes/séries -->
-    <div id="media-container"></div>
-
+    <main id="media-container"></main>
     <script src="script.js"></script>
 </body>
 </html>
