@@ -63,3 +63,20 @@ select {
     font-size: 16px;
     margin: 5px;
 }
+
+/* Estilo para a mensagem de acesso */
+.mensagem {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 18px;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
