@@ -1,172 +1,122 @@
-/* Estilo geral para o corpo */
+/* Estilos gerais */
 body {
     font-family: Arial, sans-serif;
-    background-color: #000;
+    background-color: #121212;
     color: white;
     margin: 0;
     padding: 0;
     text-align: center;
 }
 
-/* Estilo do cabeçalho */
-header {
-    background-color: red;
-    padding: 15px;
-}
-
-/* Estilo para a barra de pesquisa no topo */
-#search-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #1c1c1c;
-    padding: 10px 0;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#search {
-    width: 250px;
-    padding: 12px;
-    font-size: 16px;
-    border: 2px solid #ccc;
-    border-radius: 30px;
-    outline: none;
-    background-color: #1c1c1c;
-    color: white;
-    margin-right: 10px;
-}
-
-#search:focus {
-    border-color: red;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-}
-
-#searchButton {
-    background-color: red;
-    color: white;
-    font-size: 16px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#searchButton:hover {
-    background-color: darkred;
-}
-
-#searchButton:active {
-    background-color: #b30000;
-}
-
-/* Ajuste para garantir que o conteúdo da página não fique escondido atrás da barra de pesquisa */
+/* Container principal */
 #media-container {
-    margin-top: 80px; /* Ajusta o espaço para a barra de pesquisa */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     padding: 20px;
-    max-width: 100%;
-    margin: 0 auto;
 }
 
-/* Estilo para cada item de mídia */
+/* Card de mídia */
 .media-item {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
+    background: #1e1e1e;
     border-radius: 10px;
-    width: 200px;
+    padding: 15px;
+    width: 250px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-sizing: border-box;
+    transition: transform 0.3s ease;
 }
 
+.media-item:hover {
+    transform: scale(1.05);
+}
+
+/* Imagem do card */
 .media-item img {
     width: 100%;
-    height: auto;
     border-radius: 10px;
 }
 
+/* Botão de acesso */
 .media-item button {
-    background-color: red;
+    background: #ff9800;
     color: white;
     border: none;
     padding: 10px;
-    cursor: pointer;
-    width: 100%;
     margin-top: 10px;
+    cursor: pointer;
     border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
+    transition: background 0.3s;
 }
 
 .media-item button:hover {
-    background-color: darkred;
+    background: #e68900;
 }
 
-/* Estilo da página de detalhes */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #000;
-    color: #fff;
-    text-align: center;
-    position: relative;
+/* Caixa de pesquisa */
+.search-container {
+    margin: 20px;
 }
 
-/* Background da página de detalhes */
-#background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    filter: blur(8px);
-    z-index: -1;
+#search {
+    padding: 10px;
+    width: 60%;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
 }
 
-/* Container de conteúdo da página de detalhes */
-.content {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 600px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Estilo do poster na página de detalhes */
-#poster {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-/* Estilo do botão na página de detalhes */
-button {
-    background-color: red;
+#searchButton {
+    padding: 10px 15px;
+    font-size: 16px;
+    background: #ff9800;
     color: white;
     border: none;
-    padding: 10px 20px;
-    font-size: 18px;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 15px;
+    margin-left: 5px;
+    transition: background 0.3s;
 }
 
-button:hover {
-    background-color: darkred;
+#searchButton:hover {
+    background: #e68900;
+}
+
+/* Mensagem temporária ao acessar */
+.access-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+/* Animação de entrada e saída da mensagem */
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #search {
+        width: 80%;
+    }
+    
+    .media-item {
+        width: 90%;
+    }
 }
