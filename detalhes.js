@@ -23,19 +23,23 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.getElementById("duracao").innerText = `⏳ Duração: ${data.runtime ? data.runtime + ' minutos' : 'Não disponível'}`;
         document.getElementById("descricao").innerText = data.overview;
 
-        // Botão de assistir
-        document.getElementById("assistir").onclick = function () {
-            // Exibir mensagem de 3 segundos
-            const mensagem = document.createElement('div');
-            mensagem.classList.add('mensagem');
-            mensagem.innerText = type === 'movie' ? `Você está assistindo o filme, ID: ${id}` : `Você está assistindo a série, ID: ${id}`;
-            document.body.appendChild(mensagem);
+        // Exibir a mensagem com o ID do filme ou série
+        const messageBox = document.createElement('div');
+        messageBox.classList.add('message-box');
+        messageBox.innerHTML = `<p>Você está acessando o ${type === 'movie' ? 'filme' : 'série'}: <strong>ID ${id}</strong></p>`;
 
-            // Remover a mensagem após 3 segundos e redirecionar
-            setTimeout(function () {
-                mensagem.remove();
-                window.location.href = link;
-            }, 3000); // 3 segundos
+        // Adiciona a mensagem à página
+        document.body.appendChild(messageBox);
+
+        // Exibir a mensagem por 3 segundos e então redirecionar
+        setTimeout(() => {
+            messageBox.remove();
+            window.location.href = link; // Redireciona para o link do filme/série
+        }, 3000); // 3 segundos
+
+        // Botão de assistir (se necessário)
+        document.getElementById("assistir").onclick = function () {
+            window.location.href = link;
         };
 
     } catch (error) {
