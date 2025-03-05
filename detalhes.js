@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
         const response = await fetch(`https://api.themoviedb.org/3/${type}/${id}?api_key=${apiKey}&language=pt-BR`);
         const data = await response.json();
-        
+
         document.getElementById("background").style.backgroundImage = `url(https://image.tmdb.org/t/p/w1280${data.backdrop_path})`;
         document.getElementById("poster").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
         document.getElementById("titulo").innerText = data.title || data.name;
@@ -25,7 +25,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Botão de assistir
         document.getElementById("assistir").onclick = function () {
-            window.location.href = link;
+            // Exibir mensagem de 3 segundos
+            const mensagem = document.createElement('div');
+            mensagem.classList.add('mensagem');
+            mensagem.innerText = type === 'movie' ? `Você está assistindo o filme, ID: ${id}` : `Você está assistindo a série, ID: ${id}`;
+            document.body.appendChild(mensagem);
+
+            // Remover a mensagem após 3 segundos e redirecionar
+            setTimeout(function () {
+                mensagem.remove();
+                window.location.href = link;
+            }, 3000); // 3 segundos
         };
 
     } catch (error) {
