@@ -1,11 +1,11 @@
 const apiKey = '6fef90efb83322056c9bf84cdde87872'; // Sua chave API TMDB
 const mediaList = [
-{ type: 'movie', id: 89623, link: "https://t.me/c/1792165409/50010/50017" },
-{ type: 'movie', id: 912649, link: "https://t.me/c/1792165409/50010/50017" },
-{ type: 'movie', id: 858414, link: "https://t.me/c/1792165409/50010/50017" },
-{ type: 'movie', id: 1362670, link: "https://t.me/c/1792165409/50010/50016" }, 
-{ type: 'movie', id: 1022789, link: "https://t.me/c/1792165409/50010/50015" },    
-{ type: 'movie', id: 550, link: "https://t.me/c/1792165409/50010/50013" }, 
+    { type: 'movie', id: 89623, link: "https://t.me/c/1792165409/50010/50017" },
+    { type: 'movie', id: 912649, link: "https://t.me/c/1792165409/50010/50017" },
+    { type: 'movie', id: 858414, link: "https://t.me/c/1792165409/50010/50017" },
+    { type: 'movie', id: 1362670, link: "https://t.me/c/1792165409/50010/50016" }, 
+    { type: 'movie', id: 1022789, link: "https://t.me/c/1792165409/50010/50015" },    
+    { type: 'movie', id: 550, link: "https://t.me/c/1792165409/50010/50013" }, 
     { type: 'tv', id: 1399, link: "https://t.me/seu_link_aqui" },
     { type: 'tv', id: 1379, link: "https://t.me/seu_link_aqui" },
     { type: 'tv', id: 93405, link: "https://t.me/seu_link_aqui" }
@@ -67,5 +67,20 @@ function setupSearch() {
     });
 }
 
+// Exibir pop-up de anúncio (apenas uma vez por sessão)
+function showAdPopup() {
+    const adShown = sessionStorage.getItem("adShown");
+
+    if (!adShown) {
+        setTimeout(() => {
+            window.open("https://www.effectiveratecpm.com/b7jjjmc5?key=913b72ef2ce5e55e22bd74cf167eb020", "_blank");
+            sessionStorage.setItem("adShown", "true");
+        }, 3000);
+    }
+}
+
 // Função para carregar a mídia quando a página for carregada
-document.addEventListener("DOMContentLoaded", addMedia);
+document.addEventListener("DOMContentLoaded", () => {
+    addMedia();
+    showAdPopup();
+});
