@@ -1,3 +1,4 @@
+/* Estilo básico do corpo da página */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -12,6 +13,7 @@ body {
     position: relative;
 }
 
+/* Estilo para o fundo da página */
 #background {
     position: fixed;
     top: 0;
@@ -24,6 +26,7 @@ body {
     z-index: -1;
 }
 
+/* Estilo para o conteúdo */
 .content {
     background: rgba(0, 0, 0, 0.8);
     padding: 20px;
@@ -32,12 +35,14 @@ body {
     width: 90%;
 }
 
+/* Estilo para o pôster do filme ou série */
 #poster {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 10px;
 }
 
+/* Estilo para os botões */
 button {
     background-color: red;
     color: white;
@@ -49,6 +54,7 @@ button {
     margin-top: 15px;
 }
 
+/* Estilo para o efeito de hover do botão */
 button:hover {
     background-color: darkred;
 }
@@ -64,19 +70,37 @@ select {
     margin: 5px;
 }
 
-/* Estilo para a mensagem de acesso */
-.mensagem {
+/* Estilo para a mensagem de ID do filme/série */
+.message-box {
     position: fixed;
-    top: 50%;
+    top: 20%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
+    padding: 15px;
     font-size: 18px;
-    padding: 20px;
     border-radius: 10px;
-    z-index: 10;
-    text-align: center;
     width: 80%;
     max-width: 400px;
+    z-index: 999;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para a barra de carregamento (se precisar de uma) */
+.loader {
+    border: 16px solid #f3f3f3; /* Cor de fundo */
+    border-top: 16px solid #3498db; /* Cor da parte superior */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin: auto;
+}
+
+/* Animação de rotação para a barra de carregamento */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
