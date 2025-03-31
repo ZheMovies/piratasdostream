@@ -23,16 +23,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("duracao").innerText = `⏳ Duração: ${data.runtime ? data.runtime + ' minutos' : 'Não disponível'}`;
     document.getElementById("descricao").innerText = data.overview;
 
-    const messageBox = document.createElement('div');
-    messageBox.classList.add('message-box');
-    messageBox.innerHTML = `<p>Você está acessando o ${type === 'movie' ? 'filme' : 'série'}: <strong>ID ${id}</strong></p>`;
-    document.body.appendChild(messageBox);
-
-    setTimeout(() => {
-      messageBox.remove();
-      // window.location.href = link;
-    }, 3000);
-
     document.getElementById("assistir").onclick = function () {
       const iframe = document.createElement("iframe");
       iframe.src = link;
@@ -40,12 +30,25 @@ document.addEventListener("DOMContentLoaded", async function () {
       iframe.height = "500";
       iframe.frameBorder = "0";
       iframe.allowFullScreen = true;
-      iframe.style.aspectRatio = "16/9";
-      iframe.style.borderRadius = "10px";
-      iframe.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.2)";
-      iframe.style.padding = "10px";
       document.body.appendChild(iframe);
     };
+
+    const trailerResponse = await fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=pt-BR`);
+    const trailerData = await trailerResponse.json();
+
+    if (trailerData.results.length > 0) {
+      document.getElementById("trailer").onclick = function () {
+        const iframe = document.createElement("iframe");
+        iframe.src = `https://www.youtube.com/embed/${trailerData.results[0].key}`;
+        iframe.width = "100%";
+        iframe.height = "500";
+        iframe.frameBorder = "0";
+        iframe.allowFullScreen = true;
+        document.body.appendChild(iframe);
+      };
+    } else {
+      document.getElementById("trailer").style.display = "none";
+    }
   } catch (error) {
     console.error("Erro ao buscar detalhes da mídia:", error);
     document.body.innerHTML = "<h1>Erro ao carregar a mídia</h1>";
