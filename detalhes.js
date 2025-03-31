@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     document.getElementById("assistir").onclick = function () {
       const iframe = document.createElement("iframe");
-      iframe.src = link;
+      iframe.src = `${link}&embed`;
       iframe.width = "100%";
       iframe.height = "500";
       iframe.frameBorder = "0";
