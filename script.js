@@ -1,56 +1,71 @@
-document.addEventListener("DOMContentLoaded", async function () {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-  const type = params.get("type");
-  const link = params.get("link");
-  const apiKey = '6fef90efb83322056c9bf84cdde87872';
+const apiKey = '6fef90efb83322056c9bf84cdde87872'; // Sua chave API TMDB
+const mediaList = [
+{ type: 'movie', id: 89623, link: "https://t.me/c/1792165409/50010/50017" },
+{ type: 'movie', id: 912649, link: "https://t.me/c/1792165409/50010/50017" },
+{ type: 'movie', id: 858414, link: "https://t.me/c/1792165409/50010/50017" },
+{ type: 'movie', id: 1362670, link: "https://t.me/c/1792165409/50010/50016" }, 
+{ type: 'movie', id: 1022789, link: "https://t.me/c/1792165409/50010/50015" },    
+{ type: 'movie', id: 550, link: "https://t.me/c/1792165409/50010/50013" }, 
+    { type: 'tv', id: 1399, link: "https://t.me/seu_link_aqui" },
+    { type: 'tv', id: 1379, link: "https://t.me/seu_link_aqui" },
+    { type: 'tv', id: 93405, link: "https://t.me/seu_link_aqui" }
+];
 
-  if (!id || !type) {
-    document.body.innerHTML = "<h1>Mídia não encontrada</h1>";
-    return;
-  }
-
-  try {
-    const response = await fetch(`https://api.themoviedb.org/3/${type}/${id}?api_key=${apiKey}&language=pt-BR`);
-    const data = await response.json();
-
-    document.getElementById("background").style.backgroundImage = `url(https://image.tmdb.org/t/p/w1280${data.backdrop_path})`;
-    document.getElementById("poster").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
-    document.getElementById("titulo").innerText = data.title || data.name;
-    document.getElementById("nota").innerText = `⭐ Nota: ${data.vote_average ? data.vote_average.toFixed(1) : 'N/A'}`;
-    document.getElementById("genero").innerText = `🎭 Gênero: ${data.genres.map(g => g.name).join(', ')}`;
-    document.getElementById("data-lancamento").innerText = `📅 Lançamento: ${data.release_date || data.first_air_date || 'Não disponível'}`;
-    document.getElementById("duracao").innerText = `⏳ Duração: ${data.runtime ? data.runtime + ' minutos' : 'Não disponível'}`;
-    document.getElementById("descricao").innerText = data.overview;
-
-    document.getElementById("assistir").onclick = function () {
-      const iframe = document.createElement("iframe");
-      iframe.src = `${link}&embed`;
-      iframe.width = "100%";
-      iframe.height = "500";
-      iframe.frameBorder = "0";
-      iframe.allowFullScreen = true;
-      document.body.appendChild(iframe);
-    };
-
-    const trailerResponse = await fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${apiKey}&language=pt-BR`);
-    const trailerData = await trailerResponse.json();
-
-    if (trailerData.results.length > 0) {
-      document.getElementById("trailer").onclick = function () {
-        const iframe = document.createElement("iframe");
-        iframe.src = `https://www.youtube.com/embed/${trailerData.results[0].key}`;
-        iframe.width = "100%";
-        iframe.height = "500";
-        iframe.frameBorder = "0";
-        iframe.allowFullScreen = true;
-        document.body.appendChild(iframe);
-      };
-    } else {
-      document.getElementById("trailer").style.display = "none";
+// Função para buscar os dados da API TMDB
+async function fetchMediaData(type, id) {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/${type}/${id}?api_key=${apiKey}&language=pt-BR`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Erro ao buscar dados da mídia:', error);
+        return null;
     }
-  } catch (error) {
-    console.error("Erro ao buscar detalhes da mídia:", error);
-    document.body.innerHTML = "<h1>Erro ao carregar a mídia</h1>";
-  }
-});
+}
+
+// Função para adicionar os cards de mídia à página
+async function addMedia() {
+    const mediaContainer = document.getElementById('media-container');
+    const startIndex = 0; // Paginando para mostrar 20 postagens por vez
+    const endIndex = 20; // 20 postagens por página
+
+    for (let i = startIndex; i < endIndex && i < mediaList.length; i++) {
+        const media = mediaList[i];
+        const data = await fetchMediaData(media.type, media.id);
+        if (!data || data.status_code) continue;
+
+        const mediaItem = document.createElement('div');
+        mediaItem.classList.add('media-item');
+        mediaItem.innerHTML = `
+            <h3>${data.title || data.name}</h3>
+            <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" alt="${data.title || data.name}">
+            <button onclick="location.href='detalhes.html?id=${media.id}&type=${media.type}&link=${encodeURIComponent(media.link)}'">Acessar</button>
+        `;
+        mediaContainer.appendChild(mediaItem);
+    }
+
+    // Agora que os cards estão carregados, ativar a função de busca
+    setupSearch();
+}
+
+// Função de pesquisa
+function setupSearch() {
+    const searchButton = document.getElementById("searchButton");
+    searchButton.addEventListener("click", function() {
+        const searchQuery = document.getElementById("search").value.toLowerCase();
+        const mediaItems = document.querySelectorAll(".media-item");
+
+        mediaItems.forEach(function(item) {
+            const title = item.querySelector("h3").innerText.toLowerCase();
+
+            if (title.includes(searchQuery)) {
+                item.style.display = "block"; // Exibe o item se corresponder à pesquisa
+            } else {
+                item.style.display = "none"; // Esconde o item caso contrário
+            }
+        });
+    });
+}
+
+// Função para carregar a mídia quando a página for carregada
+document.addEventListener("DOMContentLoaded", addMedia);
